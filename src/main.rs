@@ -6,15 +6,12 @@ mod doigen;
 use crate::doigen::generatetag;
 
 /*
- Author Gaurav Sablok
- Instytut Chemii Bioorganicznej
- Polskiej Akademii Nauk
- ul. Noskowskiego 12/14 | 61-704, Poznań
+ Author Gaurav Sablok,
+ Email: codeprog@icloud.com
  Date: 2025-22-8
 */
 
-#[tokio::main]
-async fn main() {
+fn main() {
     let argparse = CommandParse::parse();
     match &argparse.command {
         Commands::Doigen { pathfile } => {

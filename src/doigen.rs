@@ -5,10 +5,8 @@ use std::io::{BufRead, BufReader};
 use std::process::Command;
 
 /*
- Author Gaurav Sablok
- Instytut Chemii Bioorganicznej
- Polskiej Akademii Nauk
- ul. Noskowskiego 12/14 | 61-704, Poznań
+ Author Gaurav Sablok,
+ Email: codeprog@icloud.com
  Date: 2025-22-8
 */
 
@@ -18,42 +16,23 @@ pub struct FASTA {
     pub sequence: String,
 }
 
-#[tokio::main]
-pub async fn readfasta(pathfile: &str) -> Result<Vec<FASTA>, Box<dyn Error>> {
-    let fileopen = File::open(pathfile).expect("file not present");
-    let fileread = BufReader::new(fileopen);
-    let mut fastavec: Vec<FASTA> = Vec::new();
-    let mut id: Vec<String> = Vec::new();
-    let mut sequence: Vec<String> = Vec::new();
-    for i in fileread.lines() {
-        let line = i.expect("line not present");
-        if line.starts_with(">") {
-            id.push(line.replace(">", ""));
-        } else if !line.starts_with("#") {
-            sequence.push(line);
-        }
-    }
-    for i in 0..id.len() {
-        fastavec.push(FASTA {
-            id: id[i].clone().to_string(),
-            sequence: sequence[i].clone().to_string(),
-        })
-    }
-
-    Ok(fastavec)
-}
-
-#[tokio::main]
-pub async fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
+pub fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
     let fastaunpack: Vec<FASTA> = readfasta(pathfile).expect("file not present");
-    let mut fastawrite = File::create("fastafile").expect("file not present");
     for i in fastaunpack.iter() {
-        writeln!(fastawrite, "{}", i.sequence).expect("File not found");
+        let filename = format!("{}.{}", i.id, "id");
+        let mut filename = File::create(filename).expect("file not present");
+        writeln!(filename, "{}", i.sequence).expect("File not found");
     }
-    let _ = Command::new("sh")
-        .arg("runmd5.sh")
+
+    let _ = Command::new("mkdir")
+        .arg("tags")
         .output()
-        .expect("command failed");
+        .expect("commandfailed");
+
+    let _ = Command::new("sh")
+        .arg("./src/md5sum.sh")
+        .output()
+        .expect("folder not present");
 
     let fileopenadd = File::open("estimatetag.txt").expect("file not present");
     let fileopenreadadd = BufReader::new(fileopenadd);
@@ -105,5 +84,35 @@ pub async fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
         writeln!(finaltagwrite, "{}\t{}", sequenceid[i], finaltag[i]).expect("File not found");
     }
 
+    let _ = Command::new("rm")
+        .arg("estimatetag.txt")
+        .output()
+        .expect("file not present");
+
     Ok("the doi for the sequences have been written".to_string())
+}
+
+#[tokio::main]
+pub async fn readfasta(pathfile: &str) -> Result<Vec<FASTA>, Box<dyn Error>> {
+    let fileopen = File::open(pathfile).expect("file not present");
+    let fileread = BufReader::new(fileopen);
+    let mut fastavec: Vec<FASTA> = Vec::new();
+    let mut id: Vec<String> = Vec::new();
+    let mut sequence: Vec<String> = Vec::new();
+    for i in fileread.lines() {
+        let line = i.expect("line not present");
+        if line.starts_with(">") {
+            id.push(line.replace(">", ""));
+        } else if !line.starts_with("#") {
+            sequence.push(line);
+        }
+    }
+    for i in 0..id.len() {
+        fastavec.push(FASTA {
+            id: id[i].clone().to_string(),
+            sequence: sequence[i].clone().to_string(),
+        })
+    }
+
+    Ok(fastavec)
 }

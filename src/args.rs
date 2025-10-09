@@ -4,10 +4,9 @@ use clap::{Parser, Subcommand};
     name = "doigen",
     version = "1.0",
     about = "doigen.
-       ************************************************
-      Gaurav Sablok, IBCH, PAN, Poznan, Poland,
-      https://portal.ichb.pl/laboratory-of-genomics/.
-      Email: gsablok@ibch.poznan.pl
+      ************************************************
+      Gaurav Sablok,
+      Email: codeprog@icloud.com
       ************************************************"
 )]
 pub struct CommandParse {

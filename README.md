@@ -10,10 +10,9 @@ cargo build
 
 ```
 doigen.
-       ************************************************
-      Gaurav Sablok, IBCH, PAN, Poznan, Poland,
-      https://portal.ichb.pl/laboratory-of-genomics/.
-      Email: gsablok@ibch.poznan.pl
+      ************************************************
+      Gaurav Sablok,
+      Email: codeprog@icloud.com
       ************************************************
 
 Usage: doiTAG <COMMAND>
@@ -27,8 +26,9 @@ Options:
   -V, --version  Print version
 ```
 
-Gaurav Sablok \
-Instytut Chemii Bioorganicznej \
-Polskiej Akademii Nauk \
-ul. Noskowskiego 12/14 | 61-704, Poznań \
-Poland
+```
+ ./target/debug/doiTAG  doigen ./test/file.fasta
+ ```
+
+Gaurav Sablok
+codeprog@icloud.com
