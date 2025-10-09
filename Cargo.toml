@@ -2,6 +2,11 @@
 name = "doiTAG"
 version = "0.2.0"
 edition = "2024"
+license = "MIT"
+authors = ["Gaurav Sablok <codeprog@icloud.com>"]
+description = "doiTAG for sequence DOIs"
+homepage = "https://github.com/omicscode/doiTAG"
+repository = "https://github.com/omicscode/doiTAG"
 
 [dependencies]
 clap = { version = "4.5.48", features = ["derive"] }
