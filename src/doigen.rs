@@ -5,19 +5,18 @@ use std::io::{BufRead, BufReader};
 use std::process::Command;
 
 /*
- Author Gaurav Sablok,
- Email: codeprog@icloud.com
- Date: 2025-22-8
+Gaurav Sablok,
+codeprog@icloud.com
 */
 
 #[derive(Debug, Clone, PartialOrd, PartialEq)]
-pub struct FASTA {
+pub struct Fasta {
     pub id: String,
     pub sequence: String,
 }
 
 pub fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
-    let fastaunpack: Vec<FASTA> = readfasta(pathfile).expect("file not present");
+    let fastaunpack: Vec<Fasta> = readfasta(pathfile).expect("file not present");
     for i in fastaunpack.iter() {
         let filename = format!("{}.{}", i.id, "id");
         let mut filename = File::create(filename).expect("file not present");
@@ -40,7 +39,6 @@ pub fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
     for i in fastaunpack.iter() {
         sequenceid.push(i.id.clone());
     }
-    // making a new vector for the doi generator
     let mut doivec: Vec<String> = Vec::new();
     let mut doifinaltag: Vec<String> = Vec::new();
     for i in fileopenreadadd.lines() {
@@ -92,11 +90,10 @@ pub fn generatetag(pathfile: &str) -> Result<String, Box<dyn Error>> {
     Ok("the doi for the sequences have been written".to_string())
 }
 
-#[tokio::main]
-pub async fn readfasta(pathfile: &str) -> Result<Vec<FASTA>, Box<dyn Error>> {
+pub fn readfasta(pathfile: &str) -> Result<Vec<Fasta>, Box<dyn Error>> {
     let fileopen = File::open(pathfile).expect("file not present");
     let fileread = BufReader::new(fileopen);
-    let mut fastavec: Vec<FASTA> = Vec::new();
+    let mut fastavec: Vec<Fasta> = Vec::new();
     let mut id: Vec<String> = Vec::new();
     let mut sequence: Vec<String> = Vec::new();
     for i in fileread.lines() {
@@ -108,7 +105,7 @@ pub async fn readfasta(pathfile: &str) -> Result<Vec<FASTA>, Box<dyn Error>> {
         }
     }
     for i in 0..id.len() {
-        fastavec.push(FASTA {
+        fastavec.push(Fasta {
             id: id[i].clone().to_string(),
             sequence: sequence[i].clone().to_string(),
         })

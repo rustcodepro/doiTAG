@@ -9,25 +9,32 @@ cargo build
 ```
 
 ```
+__| |   ___   (_) |_   _|    / \     / ___|
+/ _` |  / _ \  | |   | |     / _ \   | |  _ 
+| (_| | | (_) | | |   | |    / ___ \  | |_| |
+\__,_|  \___/  |_|   |_|   /_/   \_\  \____|
+                                           
+
 doigen.
-      ************************************************
-      Gaurav Sablok,
-      Email: codeprog@icloud.com
-      ************************************************
+   ************************************************
+   Gaurav Sablok,
+   Email: codeprog@icloud.com
+   ************************************************
 
 Usage: doiTAG <COMMAND>
 
 Commands:
-  doigen  generate doi for each sequences
-  help    Print this message or the help of the given subcommand(s)
+doigen  generate doi for each sequences
+help    Print this message or the help of the given subcommand(s)
 
 Options:
-  -h, --help     Print help
-  -V, --version  Print version
+-h, --help     Print help
+-V, --version  Print version
+
 ```
 
 ```
- ./target/debug/doiTAG  doigen ./test/file.fasta
+ ./target/debug/doiTAG  doigen ./test/file.fasta 4
  ```
 
 Gaurav Sablok

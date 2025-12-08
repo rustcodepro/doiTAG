@@ -21,5 +21,7 @@ pub enum Commands {
     Doigen {
         /// provide ONT file
         pathfile: String,
+        /// threads for the analysis
+        thread: String,
     },
 }
